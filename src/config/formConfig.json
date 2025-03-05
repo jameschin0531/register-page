@@ -1,0 +1,187 @@
+{
+    "regions": {
+        "MY": {
+            "name": "Malaysia",
+            "MYR": ["+60"]
+        },
+        "SG": {
+            "name": "Singapore",
+            "SGD": ["+65"]
+        },
+        "ID": {
+            "name": "Indonesia",
+            "IDR": ["+62"]
+        }
+    },
+    "steps": [
+        {
+            "label": "Account Details",
+            "fields": ["username", "password", "confirmPassword", "affiliateId"]
+        },
+        {
+            "label": "Personal Information",
+            "fields": [
+                "firstName",
+                "lastName",
+                "currency",
+                "contact",
+                "bankName",
+                "accountNo",
+                "termsAccepted"
+            ]
+        }
+    ],
+    "fields": {
+        "username": {
+            "label": "Username",
+            "type": "text",
+            "placeholder": "Username",
+            "validation": {
+                "required": {
+                    "message": "global:global.form.username-placeholderv2"
+                },
+                "pattern": {
+                    "regex": "^[a-zA-Z][a-zA-Z0-9]{3,14}$",
+                    "message": "register:register.messages.validate.login.pattern"
+                },
+                "checkDuplicate": true
+            }
+        },
+        "password": {
+            "label": "Password",
+            "type": "password",
+            "placeholder": "Password",
+            "validation": {
+                "required": {
+                    "message": "global:global.form.newpassword-placeholderv2"
+                },
+                "min": {
+                    "value": 6,
+                    "message": "global:global.messages.validate.newpassword.minlength"
+                },
+                "max": {
+                    "value": 12,
+                    "message": "global:global.messages.validate.newpassword.maxlength"
+                },
+                "pattern": {
+                    "regex": "(?=.*[A-Za-z])(?=.*[0-9])[a-zA-Z0-9]{1,}",
+                    "message": "password:password.passguide.account"
+                }
+            }
+        },
+        "confirmPassword": {
+            "label": "Confirm Password",
+            "type": "password",
+            "placeholder": "Confirm Password",
+            "validation": {
+                "required": {
+                    "message": "global:global.form.confirmpassword-placeholderv2"
+                },
+                "oneOf": {
+                    "ref": "password",
+                    "message": "global:global.messages.error.dontmatch"
+                }
+            }
+        },
+        "affiliateId": {
+            "label": "Affiliate/Referral ID",
+            "type": "text",
+            "placeholder": "(Optional) Please enter Affiliate/Referral ID",
+            "validation": {
+                "length": {
+                    "min": 2,
+                    "max": 14,
+                    "message": "global:global.messages.validate.referralcode.invalid"
+                },
+                "checkAffiliate": true
+            }
+        },
+        "firstName": {
+            "label": "First Name",
+            "type": "text",
+            "placeholder": "First Name",
+            "validation": {
+                "required": {
+                    "message": "global:global.form.fullname-placeholderv4"
+                },
+                "max": {
+                    "value": 50,
+                    "message": "global:global.messages.validate.fullname.maxlength"
+                }
+            }
+        },
+        "lastName": {
+            "label": "Last Name",
+            "type": "text",
+            "placeholder": "Last Name",
+            "validation": {
+                "required": {
+                    "message": "global:global.form.fullname-placeholderv4"
+                },
+                "max": {
+                    "value": 50,
+                    "message": "global:global.messages.validate.fullname.maxlength"
+                }
+            }
+        },
+        "currency": {
+            "label": "Currency",
+            "type": "select",
+            "placeholder": "Currency",
+            "validation": {
+                "required": {
+                    "message": "Please select a currency"
+                }
+            }
+        },
+        "contact": {
+            "label": "Contact",
+            "type": "tel",
+            "placeholder": "Mobile Number",
+            "validation": {
+                "required": {
+                    "message": "global:global.form.fullname-placeholderv2"
+                },
+                "pattern": {
+                    "regex": "^[+]?[0-9]+$",
+                    "message": "transaction:transaction.withdrawal.accountNumber-error"
+                },
+                "phoneFormat": true
+            }
+        },
+        "bankName": {
+            "label": "Your Bank Name",
+            "type": "select",
+            "placeholder": "— Select Bank —",
+            "validation": {
+                "required": {
+                    "message": "Please select a bank"
+                }
+            }
+        },
+        "accountNo": {
+            "label": "Account No",
+            "type": "text",
+            "placeholder": "Exp: 1234567",
+            "validation": {
+                "required": {
+                    "message": "inputHelpBlock:inputHelpBlock.transfer.accountNumberRequired"
+                },
+                "pattern": {
+                    "regex": "^[0-9]*$",
+                    "message": "transaction:transaction.withdrawal.accountNumber-error"
+                }
+            }
+        },
+        "termsAccepted": {
+            "label": "I confirm that I am at least 18 years old and have read and accepted your Terms and Conditions and Privacy Policy",
+            "type": "checkbox",
+            "validation": {
+                "oneOf": {
+                    "values": [true],
+                    "message": "You must accept the terms and conditions"
+                }
+            }
+        }
+    }
+}
