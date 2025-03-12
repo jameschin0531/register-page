@@ -2,15 +2,22 @@
     "regions": {
         "MY": {
             "name": "Malaysia",
-            "MYR": ["+60"]
+            "currencyCode": {
+                "MYR": ["+60", "+65"],
+                "SGD": ["+65"]
+            }
         },
         "SG": {
             "name": "Singapore",
-            "SGD": ["+65"]
+            "currencyCode": {
+                "SGD": ["+65", "+62"]
+            }
         },
         "ID": {
             "name": "Indonesia",
-            "IDR": ["+62"]
+            "currencyCode": {
+                "IDR": ["+62"]
+            }
         }
     },
     "steps": [
@@ -126,7 +133,7 @@
         },
         "currency": {
             "label": "Currency",
-            "type": "select",
+            "type": "currency-select",
             "placeholder": "Currency",
             "validation": {
                 "required": {

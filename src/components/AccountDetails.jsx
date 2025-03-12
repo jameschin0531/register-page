@@ -9,10 +9,18 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import formConfig from "../config/formConfig.json";
+import { useMemo } from "react";
 
 const FormField = ({ field, form }) => {
-    const { register, formState: { errors } = {} } = form;
+    const { register, formState: { errors } = {}, watch } = form;
     const fieldConfig = formConfig.fields[field];
+
+    const regionCode = watch("region");
+    const currencyCode = watch("currency");
+
+    const telcodeList = useMemo(() => {
+        return formConfig.regions?.[regionCode]?.currencyCode?.[currencyCode];
+    }, [regionCode, currencyCode]);
 
     if (field === "contact") {
         return (
@@ -37,15 +45,14 @@ const FormField = ({ field, form }) => {
                                 defaultValue="+60"
                                 {...register("telcode")}
                             >
-                                {Object.entries(formConfig.regions).map(([code, region]) =>
-                                    Object.keys(region).filter(key => key !== 'name').map(currency =>
-                                        region[currency].map(telcode => (
-                                            <MenuItem key={`${code}-${telcode}`} value={telcode}>
-                                                {telcode}
-                                            </MenuItem>
-                                        ))
-                                    )
-                                ).flat(2)}
+                                {telcodeList?.map((telcode) => (
+                                    <MenuItem
+                                        key={`${regionCode}-${telcode}`}
+                                        value={telcode}
+                                    >
+                                        {telcode}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Grid>
                         <Grid item xs={8}>
@@ -67,7 +74,7 @@ const FormField = ({ field, form }) => {
         );
     }
 
-    if (fieldConfig.type === "select") {
+    if (fieldConfig.type === "currency-select") {
         return (
             <Grid container spacing={2} alignItems="center" sx={{ mb: 2 }}>
                 <Grid item xs={4}>
@@ -93,13 +100,16 @@ const FormField = ({ field, form }) => {
                         <MenuItem value="" disabled>
                             {fieldConfig.placeholder}
                         </MenuItem>
-                        {Object.entries(formConfig.regions).map(([code, region]) =>
-                            Object.keys(region).filter(key => key !== 'name').map(currency => (
-                                <MenuItem key={`${code}-${currency}`} value={currency}>
-                                    {currency}
-                                </MenuItem>
-                            ))
-                        ).flat()}
+                        {Object.entries(
+                            formConfig.regions[regionCode].currencyCode
+                        ).map(([currencyCode]) => (
+                            <MenuItem
+                                key={`${regionCode}-${currencyCode}`}
+                                value={currencyCode}
+                            >
+                                {currencyCode}
+                            </MenuItem>
+                        ))}
                     </Select>
                     {errors[field] && (
                         <Box

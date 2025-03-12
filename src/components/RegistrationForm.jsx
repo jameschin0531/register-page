@@ -19,7 +19,7 @@ import { generateValidationSchema } from "../config/validationSchema";
 
 const RegistrationForm = () => {
     const [activeStep, setActiveStep] = useState(0);
-    const [selectedRegion, setSelectedRegion] = useState("Malaysia");
+    const [selectedRegion, setSelectedRegion] = useState();
     const totalSteps = formConfig.steps.length;
     const isMultiStep = totalSteps > 1;
 
@@ -65,7 +65,9 @@ const RegistrationForm = () => {
     return (
         <Container maxWidth="sm">
             <Box sx={{ width: "100%", mt: 4, position: "relative" }}>
-                <FormControl sx={{ position: "absolute", right: 0, top: 0, width: 150 }}>
+                <FormControl
+                    sx={{ position: "absolute", right: 0, top: 0, width: 150 }}
+                >
                     <InputLabel id="region-select-label">Region</InputLabel>
                     <Select
                         labelId="region-select-label"
@@ -73,12 +75,15 @@ const RegistrationForm = () => {
                         value={selectedRegion}
                         label="Region"
                         onChange={(e) => setSelectedRegion(e.target.value)}
+                        {...form.register("region")}
                     >
-                        {Object.entries(formConfig.regions).map(([code, region]) => (
-                            <MenuItem key={code} value={code}>
-                                {region.name}
-                            </MenuItem>
-                        ))}
+                        {Object.entries(formConfig.regions).map(
+                            ([code, region]) => (
+                                <MenuItem key={code} value={code}>
+                                    {region.name}
+                                </MenuItem>
+                            )
+                        )}
                     </Select>
                 </FormControl>
                 {isMultiStep && (
